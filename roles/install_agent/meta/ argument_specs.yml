@@ -2,64 +2,63 @@
 argument_specs:
   # roles/install_agent/tasks/main.yml entry point
   main:
-    short_description: "Entrypoint for install_agent role"
+    short_description: Entrypoint for install_agent role
     description:
-      - "This is the main entrypoint for the C(install_agent) role."
-      - "The entrypoint contains all os independent tasks and prepares the environment
-        for the os specific tasks."
+      - This is the main entrypoint for the C(install_agent) role.
+      - The entrypoint contains all os independent tasks and prepares the environment for the os specific tasks.
     author:
       - Marco Wester
     options:
       win_use_exe:
-        type: "bool"
+        type: bool
         required: false
         default: false
         description:
           - "Windows only: Controls the Windows agent package format."
-          - "B(false:) Downloads .msi installer file"
-          - "B(true:) Downloads .exe installer file"
+          - B(false:) Downloads .msi installer file
+          - B(true:) Downloads .exe installer file
         options:
           - true
           - false
 
       win_allow_reboot:
-        type: "bool"
+        type: bool
         required: false
         default: true
         description:
           - "Windows only: Endpoint needs to be rebooted to SentinelOne work properly."
-          - "Set to B(false) to disable automatic reboot"
+          - Set to B(false) to disable automatic reboot
         options:
           - true
           - false
 
       agent_version:
-        type: "str"
+        type: str
         required: false
-        default: "latest"
+        default: latest
         description:
-          - "The agent version string. B(default) is to install 'latest' version."
-          - "B(latest:) Install latest GA version."
-          - "B(latest_ea:) Install latest EA version."
+          - The agent version string. B(default) is to install 'latest' version.
+          - B(latest:) Install latest GA version.
+          - B(latest_ea:) Install latest EA version.
           - "B(custom): Install custom agent version. If set to custom argument 'custom_version' is required."
         choices:
-          - "latest"
-          - "latest_ea"
-          - "custom"
+          - latest
+          - latest_ea
+          - custom
 
       hide_sensitive:
-        type: "bool"
+        type: bool
         required: false
         default: true
         description:
-          - "Hide sensitive information like API keys in module output."
-          - "Only change to false for debugging purposes."
+          - Hide sensitive information like API keys in module output.
+          - Only change to false for debugging purposes.
         options:
           - true
           - false
 
       lx_force_new_token:
-        type: "bool"
+        type: bool
         required: false
         default: false
         description: "Linux only: Set the management token on the linux agent even if it is already registered."
@@ -68,34 +67,34 @@ argument_specs:
           - false
 
       custom_version:
-        type: "str"
+        type: str
         required: false
         description:
-          - "Required when 'agent_version' is set to B(custom)."
-          - "Explicit version of the agent to be installed."
+          - Required when 'agent_version' is set to B(custom).
+          - Explicit version of the agent to be installed.
 
       console_url:
-        type: "str"
+        type: str
         required: true
-        description: "The SentinelOne management console URL. E.g. https://my-s1-console.net."
+        description: The SentinelOne management console URL. E.g. https://my-s1-console.net.
 
       api_token:
-        type: "str"
+        type: str
         required: true
-        description: "The API token to authenticate at the management console."
+        description: The API token to authenticate at the management console.
 
       site:
-        type: "str"
+        type: str
         required: true
-        description: "The name of the site where the new endpoint should join."
+        description: The name of the site where the new endpoint should join.
 
       group:
-        type: "str"
+        type: str
         required: false
         description: "Optional: The name of the group where the new endpoint should join."
 
       gpg_key:
-        type: "str"
+        type: str
         required: false
         description:
-          - "The path to the gpg key to verify the agent package integrity. Required if installing a rpm agent package >= 23.3.2.12"
+          - The path to the gpg key to verify the agent package integrity. Required if installing a rpm agent package >= 23.3.2.12

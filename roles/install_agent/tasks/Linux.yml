@@ -16,7 +16,7 @@
       ansible.builtin.assert:
         that:
           - "'FUNCTION TRACING IS CORRUPTED' not in dmesg_output.stdout"
-        fail_msg: 'System instability detected, function tracing seems corrupted'
+        fail_msg: System instability detected, function tracing seems corrupted
 
     - name: "Linux: Copy agent package to remote server"
       ansible.builtin.copy:
@@ -27,7 +27,6 @@
     - name: "Block: RPM based systems"
       when: pkg_format == "rpm"
       block:
-
         - name: "Linux: Copy gpg key to remote server"
           ansible.builtin.copy:
             src: "{{ gpg_key }}"
@@ -42,8 +41,8 @@
 
         - name: "Linux: Install unsigned .rpm agent package via rpm"
           ansible.builtin.command:
-            cmd: "rpm -i --nodigest {{ remote_pkg_path }}"
-            creates: "/opt/sentinelone/bin/sentinelctl"
+            cmd: rpm -i --nodigest {{ remote_pkg_path }}
+            creates: /opt/sentinelone/bin/sentinelctl
           when: not signed_package
 
         - name: "Linux: Install signed .rpm agent package {{ remote_pkg_path }}"
@@ -54,7 +53,7 @@
     - name: "Block: DEB based systems"
       when: pkg_format == "deb"
       block:
-        - name: "Install gpg"
+        - name: Install gpg
           ansible.builtin.apt:
             name: gpg
             update_cache: true
@@ -76,8 +75,8 @@
 - name: "Linux: Check if agent is already registered"
   ansible.builtin.shell:
     # \\s needed because yaml interprets \s as escape sequence
-    cmd: "set -o pipefail && /opt/sentinelone/bin/sentinelctl management status | grep -E '^Connectivity\\s+(On|Off)$' | awk '{ print $2 }'"
-    executable: "/bin/bash"
+    cmd: set -o pipefail && /opt/sentinelone/bin/sentinelctl management status | grep -E '^Connectivity\s+(On|Off)$' | awk '{ print $2 }'
+    executable: /bin/bash
   become: true
   register: agent_status
   failed_when: agent_status.stdout is not regex("On|Off")
@@ -85,7 +84,7 @@
 
 - name: "Linux: Register agent"
   ansible.builtin.command:
-    cmd: '/opt/sentinelone/bin/sentinelctl management token set {{ reg_token_obj.json.data.token }}'
+    cmd: /opt/sentinelone/bin/sentinelctl management token set {{ reg_token_obj.json.data.token }}
   become: true
   register: token_set_output
   no_log: "{{ hide_sensitive }}"
