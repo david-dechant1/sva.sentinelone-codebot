@@ -22,7 +22,7 @@
     - name: "Windows: Install agent package {{ return_download_agent.original_message.filename }}"
       ansible.windows.win_package:
         path: "{{ remote_pkg_path }}"
-        creates_service: "SentinelAgent"
+        creates_service: SentinelAgent
         arguments: "{{ exe_parameters if pkg_format == 'exe' else msi_parameters }}"
       register: installation_result
       no_log: "{{ hide_sensitive }}"
